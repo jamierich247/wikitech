@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog Post - BlogHub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --text-primary: #1f2937;
+      --text-secondary: #6b7280;
+      --bg-light: #f9fafb;
+      --bg-white: #ffffff;
+      --border: #e5e7eb;
+      --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-light);
+      color: var(--text-primary);
+      line-height: 1.8;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-white);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .navbar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .navbar-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      padding: 0.5rem 1.25rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-secondary {
+      background: var(--bg-light);
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-white);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    .post-header {
+      margin-bottom: 3rem;
+    }
+
+    .back-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    h1 {
+      font-size: 3rem;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .post-meta {
+      display: flex;
+      gap: 1.5rem;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .author-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.5rem;
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .author-details h4 {
+      margin-bottom: 0.25rem;
+      color: var(--text-primary);
+    }
+
+    .author-details p {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+    }
+
+    .post-content {
+      background: var(--bg-white);
+      padding: 2rem;
+      border-radius: 0.75rem;
+      line-height: 1.8;
+    }
+
+    .post-content h2 {
+      font-size: 1.75rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .post-content h3 {
+      font-size: 1.25rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: var(--text-primary);
+    }
+
+    .post-content p {
+      margin-bottom: 1.5rem;
+      color: var(--text-secondary);
+    }
+
+    .post-content ul,
+    .post-content ol {
+      margin-left: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .post-content li {
+      margin-bottom: 0.5rem;
+      color: var(--text-secondary);
+    }
+
+    .post-content blockquote {
+      border-left: 4px solid var(--primary);
+      padding-left: 1.5rem;
+      margin: 2rem 0;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+
+    .post-content code {
+      background: var(--bg-light);
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.375rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #d04648;
+    }
+
+    .post-content pre {
+      background: var(--bg-light);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+    }
+
+    .post-content pre code {
+      background: none;
+      padding: 0;
+      color: var(--text-primary);
+    }
+
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-secondary);
+    }
+
+    .error {
+      background: #fee;
+      color: #ef4444;
+      padding: 2rem;
+      border-radius: 0.75rem;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 2rem 1rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .post-content {
+        padding: 1.5rem;
+      }
+
+      .post-meta {
+        gap: 1rem;
+        font-size: 0.85rem;
+      }
+
+      .author-info {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="/" class="logo">BlogHub</a>
+      <div class="navbar-buttons">
+        <a href="/" class="btn btn-secondary">
+          <i class="fas fa-arrow-left"></i> Back
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <article id="postContainer">
+      <div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading post...</div>
+    </article>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="scripts/config.js"></script>
+  <script src="scripts/auth.js"></script>
+  <script>
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+    }
+
+    function markdownToHtml(markdown) {
+      if (!markdown) return '';
+
+      let html = markdown
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/^### (.*?)$/gm, '<h3>$1</h3>')
+        .replace(/^## (.*?)$/gm, '<h2>$1</h2>')
+        .replace(/^# (.*?)$/gm, '<h1>$1</h1>')
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/\n\n/g, '</p><p>')
+        .replace(/^- (.*?)$/gm, '<li>$1</li>')
+        .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
+        .replace(/\n/g, '<br>');
+
+      return html;
+    }
+
+    async function loadPost() {
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get('slug');
+
+      if (!slug) {
+        document.getElementById('postContainer').innerHTML = '<div class="error">Post not found</div>';
+        return;
+      }
+
+      try {
+        const { data, error } = await supabase
+          .from('posts')
+          .select(`
+            *,
+            profiles:author_id(username, bio, avatar)
+          `)
+          .eq('slug', slug)
+          .maybeSingle();
+
+        if (error || !data) throw new Error('Post not found');
+
+        await supabase
+          .from('posts')
+          .update({ views: (data.views || 0) + 1 })
+          .eq('id', data.id);
+
+        const contentHtml = markdownToHtml(data.content);
+        const authorInfo = data.profiles || {};
+
+        document.getElementById('postContainer').innerHTML = `
+          <div class="post-header">
+            <a href="/" class="back-link">← Back to all posts</a>
+            <h1>${escapeHtml(data.title)}</h1>
+            <div class="post-meta">
+              <div class="meta-item">
+                <i class="fas fa-calendar"></i>
+                ${formatDate(data.created_at)}
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-eye"></i>
+                ${data.views + 1} views
+              </div>
+            </div>
+          </div>
+
+          <div class="author-info">
+            <img src="${authorInfo.avatar || 'https://api.dicebear.com/7.x/avataaars/svg?seed=user'}" alt="${authorInfo.username}" class="author-avatar">
+            <div class="author-details">
+              <h4>${escapeHtml(authorInfo.username || 'Anonymous')}</h4>
+              <p>${escapeHtml(authorInfo.bio || 'Blogger at BlogHub')}</p>
+            </div>
+          </div>
+
+          <div class="post-content">
+            ${contentHtml}
+          </div>
+        `;
+
+        document.title = `${data.title} - BlogHub`;
+      } catch (err) {
+        console.error('Load error:', err);
+        document.getElementById('postContainer').innerHTML = '<div class="error">Failed to load post</div>';
+      }
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    document.addEventListener('DOMContentLoaded', loadPost);
+  </script>
+</body>
+</html>
