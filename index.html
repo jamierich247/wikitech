@@ -1,345 +1,808 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BlogHub - Share Your Stories</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #2563eb;
-      --primary-dark: #1e40af;
-      --secondary: #10b981;
-      --accent: #f59e0b;
-      --text-primary: #1f2937;
-      --text-secondary: #6b7280;
-      --bg-light: #f9fafb;
-      --bg-white: #ffffff;
-      --border: #e5e7eb;
-      --success: #10b981;
-      --error: #ef4444;
-      --shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
-      --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="gEY3nyAR9AF0LE34c0ZMo160ba7mSEqqJs_-ncbLa9c" />
+    <title>WikiTech - Future of Technology</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a2a6c;
+            --secondary: #b21f1f;
+            --accent: #00f2ff;
+            /* Cyberpunk blue for Tech feel */
+            --text-light: #f8f9fa;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --bg-dark: #0f0c29;
+        }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg-light);
-      color: var(--text-primary);
-      line-height: 1.6;
-    }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
 
-    .navbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--bg-white);
-      border-bottom: 1px solid var(--border);
-      box-shadow: var(--shadow);
-    }
+        /* Background Animation */
+        .bg-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #0f0c29 100%);
+        }
 
-    .navbar .container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 0;
-    }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: floatOrb 10s infinite alternate;
+        }
 
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--primary);
-      text-decoration: none;
-    }
+        .orb-1 {
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: #2a0845;
+        }
 
-    .navbar-menu {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
+        .orb-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: #1a2a6c;
+            animation-delay: -5s;
+        }
 
-    .search-input {
-      padding: 0.5rem 1rem;
-      border: 1px solid var(--border);
-      border-radius: 0.5rem;
-      font-size: 0.95rem;
-      width: 200px;
-      transition: border-color 0.3s;
-    }
+        @keyframes floatOrb {
+            0% {
+                transform: translate(0, 0);
+            }
 
-    .search-input:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-    }
+            100% {
+                transform: translate(30px, 50px);
+            }
+        }
 
-    .navbar-buttons {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-    }
+        /* Navigation */
+        nav {
+            padding: 1.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: rgba(15, 12, 41, 0.8);
+            border-bottom: 1px solid var(--glass-border);
+        }
 
-    .btn {
-      padding: 0.5rem 1.25rem;
-      border-radius: 0.5rem;
-      font-weight: 600;
-      text-decoration: none;
-      cursor: pointer;
-      border: none;
-      font-size: 0.95rem;
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: white;
+            text-transform: uppercase;
+        }
 
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-    }
+        .logo span {
+            color: var(--accent);
+        }
 
-    .btn-primary:hover {
-      background: var(--primary-dark);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
-    }
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
 
-    .btn-secondary {
-      background: var(--bg-light);
-      color: var(--text-primary);
-      border: 1px solid var(--border);
-    }
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
 
-    .btn-secondary:hover {
-      background: var(--bg-white);
-      border-color: var(--primary);
-      color: var(--primary);
-    }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
+        .nav-links a:hover {
+            color: var(--accent);
+        }
 
-    .hero {
-      padding: 4rem 0;
-      text-align: center;
-    }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
 
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      line-height: 1.2;
-    }
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+        }
 
-    .hero p {
-      font-size: 1.25rem;
-      color: var(--text-secondary);
-      max-width: 600px;
-      margin: 0 auto;
-    }
+        .content-wrapper {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
 
-    .posts-section {
-      padding: 4rem 0;
-    }
+        .text-content h1 {
+            font-size: 5rem;
+            line-height: 1;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #fff, #a5a5a5);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-    .posts-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 3rem;
-    }
+        .text-content h1 span {
+            display: block;
+            color: var(--accent);
+            -webkit-text-fill-color: var(--accent);
+        }
 
-    .posts-header h2 {
-      font-size: 2rem;
-    }
+        .text-content p {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+            line-height: 1.6;
+        }
 
-    .sort-options {
-      display: flex;
-      gap: 1rem;
-    }
+        .btn-group {
+            display: flex;
+            gap: 1.5rem;
+        }
 
-    .sort-btn {
-      padding: 0.5rem 1rem;
-      border: 1px solid var(--border);
-      background: var(--bg-white);
-      border-radius: 0.5rem;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-weight: 500;
-    }
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
 
-    .sort-btn.active {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
-    }
+        .btn-primary {
+            background: var(--accent);
+            color: #0f0c29;
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
+        }
 
-    .sort-btn:hover:not(.active) {
-      border-color: var(--primary);
-      color: var(--primary);
-    }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 242, 255, 0.5);
+            background: #fff;
+        }
 
-    .posts-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 2rem;
-    }
+        .btn-outline {
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
 
-    .post-card {
-      background: var(--bg-white);
-      border: 1px solid var(--border);
-      border-radius: 0.75rem;
-      overflow: hidden;
-      transition: all 0.3s;
-      cursor: pointer;
-    }
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(0, 242, 255, 0.05);
+        }
 
-    .post-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
-      border-color: var(--primary);
-    }
+        /* Visual Element (3D Card) */
+        .visual-content {
+            perspective: 1000px;
+        }
 
-    .post-header {
-      padding: 1.5rem;
-      border-bottom: 1px solid var(--border);
-    }
+        .tech-card {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            transform: rotateY(-10deg) rotateX(5deg);
+            transition: transform 0.5s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
+        }
 
-    .post-card h3 {
-      font-size: 1.25rem;
-      margin-bottom: 0.5rem;
-      color: var(--text-primary);
-    }
+        .tech-card:hover {
+            transform: rotateY(0) rotateX(0);
+        }
 
-    .post-meta {
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-    }
+        .tech-icon {
+            font-size: 8rem;
+            color: var(--accent);
+            filter: drop-shadow(0 0 20px var(--accent));
+            animation: pulse 3s infinite;
+        }
 
-    .post-body {
-      padding: 1.5rem;
-      min-height: 100px;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
 
-    .post-footer {
-      padding: 1rem 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-top: 1px solid var(--border);
-      background: var(--bg-light);
-    }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
 
-    .post-views {
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-    }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
 
-    .loading {
-      text-align: center;
-      padding: 2rem;
-      color: var(--text-secondary);
-    }
+        /* Section Styles */
+        .section-padding {
+            padding: 8rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
 
-    .footer {
-      background: var(--bg-white);
-      border-top: 1px solid var(--border);
-      padding: 2rem 0;
-      margin-top: 4rem;
-      text-align: center;
-      color: var(--text-secondary);
-    }
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
 
-    @media (max-width: 768px) {
-      .navbar-menu {
-        gap: 1rem;
-      }
+        .section-header h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
 
-      .search-input {
-        width: 150px;
-        padding: 0.4rem 0.75rem;
-      }
+        .section-header h2 span {
+            color: var(--accent);
+        }
 
-      .hero h1 {
-        font-size: 2rem;
-      }
+        .section-header p {
+            color: rgba(255, 255, 255, 0.6);
+        }
 
-      .posts-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-      }
+        .grid-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
 
-      .posts-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+        /* Card Styles */
+        .content-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .content-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.2);
+            margin-bottom: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .content-card:hover .card-icon {
+            color: var(--accent);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-desc {
+            color: rgba(255, 255, 255, 0.4);
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-btn {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .content-card:hover .card-btn {
+            background: var(--accent);
+            color: #0f0c29;
+            border-color: var(--accent);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            backdrop-filter: blur(8px);
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: #1a1a2e;
+            background: linear-gradient(135deg, #1a1a2e, #0f0c29);
+            margin: 5% auto;
+            padding: 3rem;
+            width: 90%;
+            max-width: 900px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            position: relative;
+            animation: slideUp 0.4s ease;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.3s;
+            z-index: 10;
+        }
+
+        .close-modal:hover {
+            color: var(--accent);
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .text-content h1 {
+                font-size: 3.5rem;
+            }
+
+            .text-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .visual-content {
+                display: none;
+            }
+
+            nav {
+                padding: 1.5rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 
 <body>
-  <nav class="navbar">
-    <div class="container">
-      <div class="navbar-brand">
-        <a href="/" class="logo">BlogHub</a>
-      </div>
-      <div class="navbar-menu" id="navbarMenu">
-        <div class="navbar-item">
-          <input type="text" id="searchInput" class="search-input" placeholder="Search posts...">
-        </div>
-        <div class="navbar-buttons">
-          <a href="/auth.html" class="btn btn-secondary" id="loginBtn">Login</a>
-          <a href="/create-post.html" class="btn btn-primary" id="createBtn" style="display: none;">Create Post</a>
-          <button class="btn btn-secondary" id="logoutBtn" style="display: none;">Logout</button>
-        </div>
-      </div>
+    <div class="bg-fixed">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
     </div>
-  </nav>
 
-  <main class="container">
+    <nav>
+        <div class="logo">Wiki<span>Tech</span></div>
+        <ul class="nav-links">
+            <li><a href="#blogs">Blogs</a></li>
+            <li><a href="#pdfs">PDF Resources</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
     <section class="hero">
-      <h1>Discover Amazing Stories</h1>
-      <p>Read and share insights from writers around the world</p>
-    </section>
+        <div class="content-wrapper">
+            <div class="text-content">
+                <h1>Future of <br><span>Technology</span></h1>
+                <p>Explore the latest innovations, deep-dive reviews, and the future of tech. Your ultimate source for
+                    digital wisdom starts here.</p>
 
-    <section class="posts-section">
-      <div class="posts-header">
-        <h2>Latest Posts</h2>
-        <div class="sort-options">
-          <button class="sort-btn active" data-sort="newest">Newest</button>
-          <button class="sort-btn" data-sort="popular">Popular</button>
+                <div class="btn-group">
+                    <a href="#blogs" class="btn btn-primary">
+                        Read Blogs
+                    </a>
+                    <a href="#pdfs" class="btn btn-outline">
+                        Get PDFs
+                    </a>
+                </div>
+            </div>
+
+            <div class="visual-content">
+                <div class="tech-card">
+                    <i class="fas fa-microchip tech-icon"></i>
+                </div>
+            </div>
         </div>
-      </div>
-      <div id="postsList" class="posts-grid">
-        <div class="loading">Loading posts...</div>
-      </div>
     </section>
-  </main>
 
-  <footer class="footer">
-    <div class="container">
-      <p>&copy; 2025 BlogHub. All rights reserved.</p>
-    </div>
-  </footer>
+    <!-- Blogs Section -->
+    <section id="blogs" class="section-padding">
+        <div class="section-header">
+            <h2>Latest <span>Blogs</span></h2>
+            <p>Insights, reviews, and tech news</p>
+        </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="scripts/config.js"></script>
-  <script src="scripts/auth.js"></script>
-  <script src="scripts/home.js"></script>
+        <div class="grid-container">
+            <!-- NEW BLOG: StreetSpeak AI Review -->
+            <article class="content-card">
+                <i class="fas fa-comments card-icon"></i>
+                <h3 class="card-title">StreetSpeak AI Review</h3>
+                <p class="card-desc">AI-powered tool for creating real human-like conversations.</p>
+                <a href="streetspeak-ai-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- NEW BLOG: CourseMateAI 2.0 Review -->
+            <article class="content-card">
+                <i class="fas fa-graduation-cap card-icon"></i>
+                <h3 class="card-title">CourseMateAI 2.0 Review</h3>
+                <p class="card-desc">AI-powered course creation platform for instant academy building.</p>
+                <a href="coursemateai-2-0-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- NEW BLOG: Kleva AI Review -->
+            <article class="content-card">
+                <i class="fas fa-brain card-icon"></i>
+                <h3 class="card-title">Kleva AI Review</h3>
+                <p class="card-desc">AI-powered content creation and marketing automation platform.</p>
+                <a href="kleva-ai-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- NEW BLOG: AiAutoSite Review -->
+            <article class="content-card">
+                <i class="fas fa-robot card-icon"></i>
+                <h3 class="card-title">AiAutoSite Review</h3>
+                <p class="card-desc">AI-powered website builder that automates business website creation.</p>
+                <a href="aiautosite-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- NEW BLOG: WallMonials Review -->
+            <article class="content-card">
+                <i class="fas fa-border-all card-icon"></i>
+                <h3 class="card-title">WallMonials Review</h3>
+                <p class="card-desc">Transform your wall art experience with custom murals and AR preview.</p>
+                <a href="wallmonials-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- NEW BLOG: Helpira Review -->
+            <article class="content-card">
+                <i class="fas fa-hands-helping card-icon"></i>
+                <h3 class="card-title">Helpira Review</h3>
+                <p class="card-desc">Ultimate tool for business growth with AI-powered automation and CRM.</p>
+                <a href="helpira-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- NEW BLOG: AI Graphics App Builder Review -->
+            <article class="content-card">
+                <i class="fas fa-paint-brush card-icon"></i>
+                <h3 class="card-title">AI Graphics App Builder Review</h3>
+                <p class="card-desc">Ultimate tool for creators to build stunning graphics and apps with AI.</p>
+                <a href="ai-graphics-app-builder-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- NEW BLOG: Appointments By DotcomPal Review -->
+            <article class="content-card">
+                <i class="fas fa-calendar-check card-icon"></i>
+                <h3 class="card-title">Appointments By DotcomPal Review</h3>
+                <p class="card-desc">Premium booking solution for businesses to streamline appointment scheduling.</p>
+                <a href="appointments-by-dotcompal-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- NEW BLOG: Trend Hunter AI Review -->
+            <article class="content-card">
+                <i class="fas fa-chart-line card-icon"></i>
+                <h3 class="card-title">Trend Hunter AI Review</h3>
+                <p class="card-desc">Game-changing tool for KDP sellers to spot winning niches before competitors.</p>
+                <a href="trend-hunter-ai-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- NEW BLOG: AI Profit Book Review -->
+            <article class="content-card">
+                <i class="fas fa-book card-icon"></i>
+                <h3 class="card-title">AI Profit Book Review</h3>
+                <p class="card-desc">Comprehensive guide to generating profits using AI tools and automation.</p>
+                <a href="ai-profit-book-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- NEW BLOG: AI Traffic Whale Review -->
+            <article class="content-card">
+                <i class="fas fa-water card-icon"></i>
+                <h3 class="card-title">AI Traffic Whale Review</h3>
+                <p class="card-desc">AI-powered traffic generation tool to boost your website traffic like never before.</p>
+                <a href="ai-traffic-whale-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- NEW BLOG: ReadyBiz AI Review -->
+            <article class="content-card">
+                <i class="fas fa-briefcase card-icon"></i>
+                <h3 class="card-title">ReadyBiz AI Review</h3>
+                <p class="card-desc">AI-powered business toolkit to streamline workflow and create professional marketing assets.</p>
+                <a href="readybiz-ai-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- NEW BLOG: Sparkclips AI Review -->
+            <article class="content-card">
+                <i class="fas fa-cut card-icon"></i>
+                <h3 class="card-title">Sparkclips AI Review</h3>
+                <p class="card-desc">AI-powered video creation tool to turn text into engaging videos in minutes.</p>
+                <a href="sparkclips-ai-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- NEW BLOG: Vibe Traffic Review -->
+            <article class="content-card">
+                <i class="fas fa-traffic-light card-icon"></i>
+                <h3 class="card-title">Vibe Traffic Review</h3>
+                <p class="card-desc">AI-powered traffic generation tool to drive free traffic and generate leads automatically.</p>
+                <a href="vibe-traffic-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- NEW BLOG: VSL Studio Review -->
+            <article class="content-card">
+                <i class="fas fa-video card-icon"></i>
+                <h3 class="card-title">VSL Studio Review</h3>
+                <p class="card-desc">AI-powered sales video creation tool that turns content into persuasive videos in minutes.</p>
+                <a href="vsl-studio-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- NEW BLOG: CalendarPal AI 2.0 Review -->
+            <article class="content-card">
+                <i class="fas fa-calendar-alt card-icon"></i>
+                <h3 class="card-title">CalendarPal AI 2.0 Review</h3>
+                <p class="card-desc">AI-powered appointment booking app that replaces multiple expensive scheduling tools.</p>
+                <a href="calendarpal-ai-2-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- NEW BLOG: AI Toker Review -->
+            <article class="content-card">
+                <i class="fas fa-robot card-icon"></i>
+                <h3 class="card-title">AI Toker Review</h3>
+                <p class="card-desc">All-in-one TikTok growth platform that automates trend detection, content creation, and posting.</p>
+                <a href="ai-toker-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- NEW BLOG: AI Profit Blueprint Review -->
+            <article class="content-card">
+                <i class="fas fa-brain card-icon"></i>
+                <h3 class="card-title">AI Profit Blueprint Review</h3>
+                <p class="card-desc">Step-by-step training and automation framework for online income streams using AI.</p>
+                <a href="ai-profit-blueprint-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- NEW BLOG: Royalty Profits AI Review -->
+            <article class="content-card">
+                <i class="fas fa-book card-icon"></i>
+                <h3 class="card-title">Royalty Profits AI Review</h3>
+                <p class="card-desc">Create complete, publish-ready books in under 6 minutes with AI.</p>
+                <a href="royalty-profits-ai-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- NEW BLOG: AI Coloring CodeX Review -->
+            <article class="content-card">
+                <i class="fas fa-paint-brush card-icon"></i>
+                <h3 class="card-title">AI Coloring CodeX Review</h3>
+                <p class="card-desc">Create professional coloring pages with AI. Clean, consistent, printable line art every time.</p>
+                <a href="ai-coloring-codex-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- NEW BLOG: NanoAI Pro Review -->
+            <article class="content-card">
+                <i class="fas fa-paint-brush card-icon"></i>
+                <h3 class="card-title">NanoAI Pro Review</h3>
+                <p class="card-desc">Create stunning visuals with AI. All-in-one design suite for creators.</p>
+                <a href="nanoai-pro-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- NEW BLOG: Syntra AI Review -->
+            <article class="content-card">
+                <i class="fas fa-robot card-icon"></i>
+                <h3 class="card-title">Syntra AI Review</h3>
+                <p class="card-desc">Automate business processes with AI. Capture leads & serve customers 24/7.</p>
+                <a href="syntra-ai-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- NEW BLOG: FlexiViral Review -->
+            <article class="content-card">
+                <i class="fas fa-virus card-icon"></i>
+                <h3 class="card-title">FlexiViral Review</h3>
+                <p class="card-desc">Run high-converting viral campaigns. Create viral giveaways & contests easily.</p>
+                <a href="flexiviral-new-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- Blog 1: Profit Cloner System Review -->
+            <article class="content-card">
+                <i class="fas fa-copy card-icon"></i>
+                <h3 class="card-title">Profit Cloner System Review</h3>
+                <p class="card-desc">Clone profits with zero budget in 2025. Earn from viral videos without filming.</p>
+                <a href="profit-cloner-system-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- Blog 2: Viral Influencer AI Review -->
+            <article class="content-card">
+                <i class="fas fa-user-friends card-icon"></i>
+                <h3 class="card-title">Viral Influencer AI Review</h3>
+                <p class="card-desc">Launch fully AI-powered influencers in under 60 seconds.</p>
+                <a href="viral-influencer-ai-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- Blog 3: Original FlexiViral Review -->
+            <article class="content-card">
+                <i class="fas fa-virus card-icon"></i>
+                <h3 class="card-title">FlexiViral Review (Original)</h3>
+                <p class="card-desc">Run high-converting viral campaigns. Create viral giveaways & contests easily.</p>
+                <a href="flexiviral-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- Blog 4: WellnessMateAI Review -->
+            <article class="content-card">
+                <i class="fas fa-heart-pulse card-icon"></i>
+                <h3 class="card-title">WellnessMateAI Review</h3>
+                <p class="card-desc">Build your wellness business with AI. Create sites, academies, diet plans & more.
+                </p>
+                <a href="wellnessmateai-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- Blog 5: Songr AI Review -->
+            <article class="content-card">
+                <i class="fas fa-music card-icon"></i>
+                <h3 class="card-title">Songr AI Review</h3>
+                <p class="card-desc">Create & Sell AI Music Instantly. Transform ideas into fully produced songs.</p>
+                <a href="songr-ai-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- Blog 6: Print Profit Vault Review -->
+            <article class="content-card">
+                <i class="fas fa-print card-icon"></i>
+                <h3 class="card-title">Print Profit Vault Review</h3>
+                <p class="card-desc">10,000 proven, profit-focused prompts for top-selling niches.</p>
+                <a href="print-profit-vault-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- Blog 7: QuantumVerse AI Review -->
+            <article class="content-card">
+                <i class="fas fa-brain card-icon"></i>
+                <h3 class="card-title">QuantumVerse AI Review</h3>
+                <p class="card-desc">Secret Executive Deal! AI is revolutionizing the way we create and grow businesses.
+                </p>
+                <a href="quantumverse-ai-review.html" class="card-btn">Read Full Review</a>
+            </article>
+
+            <!-- Blog 8: AI Revolution -->
+            <article class="content-card">
+                <i class="fas fa-robot card-icon"></i>
+                <h3 class="card-title">AI Revolution</h3>
+                <p class="card-desc">How artificial intelligence is reshaping our future.</p>
+                <a href="#" class="card-btn">Read More</a>
+            </article>
+
+            <!-- Blog 9: Developer Tools -->
+            <article class="content-card">
+                <i class="fas fa-laptop-code card-icon"></i>
+                <h3 class="card-title">Developer Tools</h3>
+                <p class="card-desc">Essential tools for modern software development.</p>
+                <a href="#" class="card-btn">Read More</a>
+            </article>
+        </div>
+    </section>
+
+    <!-- PDF Section -->
+    <section id="pdfs" class="section-padding" style="background: rgba(0,0,0,0.2);">
+        <div class="section-header">
+            <h2>PDF <span>Resources</span></h2>
+            <p>Downloadable guides, whitepapers, and documentation</p>
+        </div>
+
+        <div class="grid-container">
+            <!-- PDF 1 -->
+            <article class="content-card">
+                <i class="fas fa-file-pdf card-icon"></i>
+                <h3 class="card-title">Python Mastery Guide</h3>
+                <p class="card-desc">Complete roadmap to learning Python in 2025.</p>
+                <a href="#" target="_blank" class="card-btn"><i class="fas fa-eye"></i> Click Here to View</a>
+            </article>
+
+            <!-- PDF 2 -->
+            <article class="content-card">
+                <i class="fas fa-file-alt card-icon"></i>
+                <h3 class="card-title">System Design Cheatsheet</h3>
+                <p class="card-desc">Quick reference for scalable system architecture.</p>
+                <a href="#" target="_blank" class="card-btn"><i class="fas fa-eye"></i> Click Here to View</a>
+            </article>
+
+            <!-- PDF 3 -->
+            <article class="content-card">
+                <i class="fas fa-book card-icon"></i>
+                <h3 class="card-title">Web Security 101</h3>
+                <p class="card-desc">Fundamental principles of securing web applications.</p>
+                <a href="#" target="_blank" class="card-btn"><i class="fas fa-eye"></i> Click Here to View</a>
+            </article>
+        </div>
+    </section>
 </body>
 
 </html>
